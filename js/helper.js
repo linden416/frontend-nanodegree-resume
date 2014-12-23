@@ -43,17 +43,17 @@ var HTMLprojectDescription = '<p><br>%data%</p>';
 var HTMLprojectImage = '<img src="%data%">';
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
-var HTMLschoolName = '<a href="#">%data%';
-var HTMLschoolDegree = ' -- %data%</a>';
+var HTMLschoolName = '<div class="GSchool"><a class="GSanchorSchool" href="#">%data%</a>';
+var HTMLschoolDegree = ' -- %data%</div>';
 var HTMLschoolDates = '<div class="date-text">%data%</div>';
 var HTMLschoolLocation = '<div class="location-text">%data%</div>';
-var HTMLschoolMajor = '<em><br>Major: %data%</em>';
+var HTMLschoolMajor = '<p><em><br>Major: %data%</em></p>';
 
-var HTMLonlineClasses = '<h3>Online Classes</h3>';
+var HTMLonlineClasses = '<h3 class="LeftAlignOnlineSection">Online Classes</h3>';
 var HTMLonlineTitle = '<a href="#">%data%';
 var HTMLonlineSchool = ' - %data%</a>';
-var HTMLonlineDates = '<div class="date-text">%data%</div>';
-var HTMLonlineURL = '<br><a href="#">%data%</a>';
+var HTMLonlineDates = '<div class="date-text">%data%</div><br>';
+var HTMLonlineURL = '<a href="#">%data%</a>';
 
 var internationalizeButton = '<button>Internationalize</button>';
 var googleMap = '<div id="map"></div>';
@@ -84,9 +84,30 @@ function logClicks(x,y) {
   console.log('x location: ' + x + '; y location: ' + y);
 }
 
-$(document).click(function(loc) {
-  // your code goes here!
+$(document).click(function(loc) {     
+    var x = loc.pageX;
+    var y = loc.pageY;
+    logClicks(x, y);
 });
+
+function inName(sFullName)
+{
+    if (!sFullName)
+      return "";
+
+    console.log(sFullName);
+    var namesArr = sFullName.split(" ");
+
+    var fNameLower = namesArr[0].substr(1);
+    console.log(fNameLower);
+    fNameLower = fNameLower.toLowerCase();
+
+    var fInitial = namesArr[0].substring(0,1);
+    fInitial = fInitial.toUpperCase();
+
+    console.log( fInitial + fNameLower + " " + namesArr[1].toUpperCase() );
+    return fInitial + fNameLower + " " + namesArr[1].toUpperCase();
+}
 
 
 
@@ -161,16 +182,21 @@ function initializeMap() {
       title: name
     });
 
+    
+
     // infoWindows are the little helper windows that open when you click
     // or hover over a pin on a map. They usually contain more information
     // about a location.
+    //https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
     var infoWindow = new google.maps.InfoWindow({
-      content: name
+        content: name
     });
 
     // hmmmm, I wonder what this is about...
     google.maps.event.addListener(marker, 'click', function() {
-      // your code goes here!
+      console.log("google map click " + marker.title + " - " + infoWindow.content);
+      infoWindow.content = "<div><h1>" + infoWindow.content + "</h1></div>";
+      infoWindow.open(map,marker);
     });
 
     // this is where the pin actually gets added to the map.
@@ -231,13 +257,11 @@ function initializeMap() {
 /*
 Uncomment the code below when you're ready to implement a Google Map!
 */
-
-// Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+window.addEventListener('load', initializeMap);
 
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
-//window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function(e) {
   // Make sure the map bounds get updated on page resize
-//  map.fitBounds(mapBounds);
-//});
+  map.fitBounds(mapBounds);
+});

@@ -213,3 +213,32 @@ span {
     display: block;
   }
 }
+
+.GSchoolH3 {
+  margin: 0;
+}
+.GSchoolH3 h3 {
+  font-style: italic;
+  font-size: 16px;
+  color: #000000;
+  display: block;
+  margin: 0;
+}
+.GSchoolH3 a {
+  text-decoration: underline;
+  color: #1199C3;
+  display: inline;  
+}
+.GSchool {
+  display: block;
+  margin-top: 10px;
+}
+.GSanchorSchool {
+  text-decoration: underline;
+  color: #1199C3;
+  display: inline;
+}
+.LeftAlignOnlineSection {
+  padding:0;
+  margin-top:10px;
+}
